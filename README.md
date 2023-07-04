@@ -18,6 +18,7 @@ https://gadm.org/download_country.html
 We downloaded CCNL rasters for each year from Zenodo repository, stacked and cropped them above 45°N via following scripts
 
 [downloading_ALAN_layers.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/downloading_ALAN_layers.R)
+
 [stacking_and_cropping_ALAN_layers.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/stacking_and_cropping_ALAN_layers.R)
 
 ### Creating ALAN trend maps
