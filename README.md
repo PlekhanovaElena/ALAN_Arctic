@@ -25,6 +25,12 @@ https://gadm.org/download_country.html
 
 [downloading_human_set_data.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/downloading_human_set_data.R)
 
+### Total 
+
+We calculate total lit area for each region and subregion for each year. We then calculate ARIMA slope and p-value and the annual growth in ALAN extent.
+
+[calculating_lit_area_per_year_and_growth.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_lit_area_per_year_and_growth.R)
+
 ### Creating ALAN trend maps
 
 We calculate and save ARIMA slope and p-value for each pixel of CCNL data across 1992-2013. The code is parallelized to 32 cores for computational efficiency and takes about 2h to run on 32 cores, 32GB RAM. 
