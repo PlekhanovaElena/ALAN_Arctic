@@ -27,7 +27,7 @@ Required packages: terra, raster, rgdal tictoc, reshape
 
 [downloading_human_set_data.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/downloading_human_set_data.R)
 
-### Stats for ALAN area and development during 1992-2013 (Fig.1, Table 1, Supplementary Table 1)
+### Stats for ALAN area and development during 1992-2013 (Figure 1, Table 1, Suppl. Table 1)
 
 We calculated total lit area for each region and subregion for each year. We then calculated ARIMA slope and p-value and the annual growth in ALAN extent.
 
@@ -41,7 +41,7 @@ We calculated proportion of lit areas containing human settlement to the total l
 
 [calculating_proportion_of_inhabited_lit_areas.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_proportion_of_inhabited_lit_areas.R)
 
-### Creating ALAN trend maps
+### Creating ALAN trend maps (Figure 2,3)
 
 We calculate and save ARIMA slope and p-value for each pixel of CCNL data across 1992-2013. The code is parallelized to 32 cores for computational efficiency and takes about 2h to run on 32 cores, 32GB RAM. 
 
