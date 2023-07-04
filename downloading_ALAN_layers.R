@@ -9,5 +9,3 @@ for (year in 1992:2013) {
   download.file(url, destfile, method = "curl")
   toc()
 }
-
-
