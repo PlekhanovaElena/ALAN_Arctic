@@ -27,7 +27,7 @@ Required packages: terra, raster, rgdal tictoc, reshape
 
 [downloading_human_set_data.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/downloading_human_set_data.R)
 
-### Stats for ALAN area and development during 1992-2013 (Figure 1, Table 1, Suppl. Table 1)
+### Stats for ALAN area and development during 1992-2013 (Figure 1, Table 1, Suppl. Table 2)
 
 We calculated total lit area for each region and subregion for each year. We then calculated ARIMA slope and p-value and the annual growth in ALAN extent.
 
