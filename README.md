@@ -29,13 +29,17 @@ Required packages: terra, raster, rgdal tictoc, reshape
 
 ### Stats for ALAN area and development during 1992-2013 (Fig.1, Table 1, Supplementary Table 1)
 
-We calculate total lit area for each region and subregion for each year. We then calculate ARIMA slope and p-value and the annual growth in ALAN extent.
+We calculated total lit area for each region and subregion for each year. We then calculated ARIMA slope and p-value and the annual growth in ALAN extent.
 
 [calculating_lit_area_per_year_and_growth.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_lit_area_per_year_and_growth.R)
 
-We calculate total area, newly lit area and ALAN intensity-based annual growth rate in human activity for regions and subregions via the following script.
+We calculated total area, newly lit area and ALAN intensity-based annual growth rate in human activity for regions and subregions via the following script.
 
 [calculating_areas_stats.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_areas_stats.R)
+
+We calculated proportion of lit areas containing human settlement to the total lit area for each region and subregion.
+
+[calculating_proportion_of_inhabited_lit_areas.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_proportion_of_inhabited_lit_areas.R)
 
 ### Creating ALAN trend maps
 
