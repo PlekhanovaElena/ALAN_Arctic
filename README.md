@@ -13,6 +13,15 @@ https://gadm.org/download_country.html
 
 ## Code
 
+### Data preparation
+
+We downloaded CCNL rasters for each year from Zenodo repository, stacked and cropped them above 45°N via following scripts
+
+[downloading_ALAN_layers.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/downloading_ALAN_layers.R)
+[stacking_and_cropping_ALAN_layers.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/stacking_and_cropping_ALAN_layers.R)
+
+### Creating ALAN trend maps
+
 We calculate and save ARIMA slope and p-value for each pixel of CCNL data across 1992-2013. The code is parallelized to 32 cores for computational efficiency and takes about 2h to run on 32 cores, 32GB RAM. 
 
 [calculating_arima_slope_pval.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_arima_slope_pval.R)
