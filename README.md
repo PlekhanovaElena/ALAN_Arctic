@@ -15,11 +15,17 @@ https://gadm.org/download_country.html
 
 ### Data preparation
 
-We downloaded CCNL rasters for each year from Zenodo repository, stacked and cropped them above 45°N via following scripts
+**ALAN**. We downloaded CCNL rasters for each year from Zenodo repository, stacked and cropped them above 45°N via following scripts
 
 [downloading_ALAN_layers.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/downloading_ALAN_layers.R)
 
 [stacking_and_cropping_ALAN_layers.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/stacking_and_cropping_ALAN_layers.R)
+
+**Human settlement**
+
+We downladed Global Human Settlement Layer (GHSL) via the following script. We then reprojected it to the standard WGS 84 coordinate system using QGIS 3.28.0.
+
+[downloading_human_set_data.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/downloading_human_set_data.R)
 
 ### Creating ALAN trend maps
 
