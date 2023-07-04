@@ -64,6 +64,3 @@ pvals = raster("~/data/ntl/ntl_results/arima_pvals.tif")
 slps[pvals>0.05]=100 # non-significant slopes are set to 100
 #plot(slps)
 writeRaster(slps, "~/data/ntl/ntl_results/arima_slopes_significant.tif", overwrite=T)
-
-
-
