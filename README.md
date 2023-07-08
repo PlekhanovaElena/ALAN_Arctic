@@ -17,11 +17,14 @@ Required packages: terra, raster, rgdal tictoc, reshape
 
 ### Data preparation
 
-**ALAN**. We downloaded CCNL rasters for each year from Zenodo repository, stacked and cropped them above 45°N via following scripts
+**ALAN**. We downloaded CCNL rasters for each year from Zenodo repository, stacked and cropped them above 45°N and filtered out the auroras via following scripts
 
 [downloading_ALAN_layers.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/downloading_ALAN_layers.R)
 
 [stacking_and_cropping_ALAN_layers.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/stacking_and_cropping_ALAN_layers.R)
+
+[filtering_of_auroras.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/filtering_of_auroras.R)
+
 
 **Human settlement**. We downladed Global Human Settlement Layer (GHSL) via the following script. We then reprojected it to the standard WGS 84 coordinate system using QGIS 3.28.0.
 
