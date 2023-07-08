@@ -13,7 +13,7 @@ https://gadm.org/download_country.html
 
 ## Code
 
-Required packages: terra, raster, rgdal tictoc, reshape
+Required packages: terra, raster, rgdal tictoc, reshape, ggplot2
 
 ### Data preparation
 
