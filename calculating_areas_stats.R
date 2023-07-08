@@ -3,7 +3,12 @@ library(rgdal)
 library(tictoc)
 library(reshape)
 
-ntl = rast("~/data/ntl/ntl_results/cum_ntls.tif")
+ntl_all = rast("~/data/ntl/ntl_results/aurora_correction/corrected_ntl_stack.tif")
+
+#ntl = app(ntl_all, fun = sum)
+#writeRaster(ntl, "~/data/ntl/ntl_results/aurora_correction/cum_ntls.tif")
+
+ntl = rast("~/data/ntl/ntl_results/aurora_correction/cum_ntls.tif")
 
 
 layer_shp_of_country = list("Russia" = "NAME_1",
@@ -38,6 +43,71 @@ regions_of_country = list(
   "Iceland" = "Iceland"
 )
 
+## Larger regions:
+## Russia: all regs combined
+country = "Russia"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_names = regions_of_country[[country]]
+reg_shp_rus = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                            reg_names, 2]
+# ----- North America
+## North America - Canda: all regs + USA: Alasks
+
+country = "Canada"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_names = regions_of_country[[country]]
+reg_shp1 = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                         reg_names, 2]
+country = "USA"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_names = regions_of_country[[country]]
+reg_shp2 = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                         reg_names, 2]
+reg_shp_na = rbind(reg_shp1, reg_shp2)
+
+# ----- European Arctic
+## Europe Faroe + Iceland + Finland: all regs + Norway: all regs + Sweden
+country = "Faroe"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_shp1 = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                         regions_of_country[[country]], 2]
+country = "Iceland"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_shp2 = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                         regions_of_country[[country]], 2]
+country = "Finland"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_shp3 = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                         regions_of_country[[country]], 2]
+country = "Norway"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_shp4 = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                         regions_of_country[[country]], 2]
+country = "Sweden"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_shp5 = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                         regions_of_country[[country]], 2]
+
+reg_shp_eu = rbind(vect(reg_shp1), vect(reg_shp2), vect(reg_shp3), 
+                   vect(reg_shp4), vect(reg_shp5))
+
+country = "Greenland"
+country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
+                             shapefile_of_country[country]))
+reg_shp_gr = country_shp[country_shp[[layer_shp_of_country[[country]]]] %in% 
+                           regions_of_country[[country]], 2]
+
+reg_shp_un_pa = rbind(vect(reg_shp_rus), reg_shp_eu, vect(reg_shp_na), vect(reg_shp_gr))
+
+
 
 clip_to_shape = function(orig_raster, reg_shp, vectr = F) {
   
@@ -48,7 +118,7 @@ clip_to_shape = function(orig_raster, reg_shp, vectr = F) {
 }
 
 area_calc = function(rastr) {
-  ar = cellSize(rastr, unit = "km")
+  ar = cellSize(rastr, unit = "km", mask = T, lyrs = T)
   return(sum(values(ar), na.rm = T))
 }
 
@@ -57,7 +127,7 @@ area_calc = function(rastr) {
 lit_area_calc = function(rastr) {
   cll = rastr
   cll[cll == 0] = NA
-  arl = cellSize(cll, unit = "km")
+  arl = cellSize(cll, unit = "km", mask = T, lyrs = T)
   return(sum(values(arl), na.rm = T))
 }
 
@@ -65,19 +135,19 @@ newly_lit_area_calc = function(rastr, rastr_base_year) {
   cln = rastr
   cln[cln == 0] = NA
   cln[rastr_base_year > 0] = NA
-  arn = cellSize(cln, unit = "km")
+  arn = cellSize(cln, unit = "km", mask = T, lyrs = T)
   return(sum(values(arn), na.rm = T))
 }
 
 lit_area_inc_dec = function(rastr, total_area_loc) {
   cli = rastr
   cli[cli <= 0] = NA
-  ari = cellSize(cli, unit = "km")
+  ari = cellSize(cli, unit = "km", mask = T, lyrs = T)
   increase_area = sum(values(ari), na.rm = T)
   
   cld = rastr
   cld[cld >= 0] = NA
-  ard = cellSize(cld, unit = "km")
+  ard = cellSize(cld, unit = "km", mask = T, lyrs = T)
   decrease_area = sum(values(ard), na.rm = T)
   
   cat("increase_area", round(100*increase_area/total_area_loc,2), "%\n")
@@ -86,18 +156,18 @@ lit_area_inc_dec = function(rastr, total_area_loc) {
            round(100*decrease_area/total_area_loc,2)))
 }
 
-final_year = rast("~/data/ntl/ntl_results/Z_DMSPstacked_45latitude.tif")[[22]]
-lm_slope = rast("~/data/ntl/ntl_results/arima_slopes_significant.tif")
+final_year = rast("~/data/ntl//ntl_results/aurora_correction/corrected_ntl_stack.tif")[[22]]
+lm_slope = rast("~/data/ntl//ntl_results/aurora_correction/arima_slopes_significant.tif")
 lm_slope[lm_slope == 100] = NA
 
-base_year = rast("~/data/ntl/ntl_results/Z_DMSPstacked_45latitude.tif")[[1]]
+base_year = rast("~/data/ntl//ntl_results/aurora_correction/corrected_ntl_stack.tif")[[1]]
 
 
 
 cnt_uls = sapply(names(regions_of_country), function(country) {
   tic(country)
   if (country == "Norway") { # calculating newly lit areas based on 1993 for Norway
-    base_year = rast("~/data/ntl/ntl_results/Z_DMSPstacked_45latitude.tif")[[2]]
+    base_year = rast("~/data/ntl//ntl_results/aurora_correction/corrected_ntl_stack.tif")[[2]]
   }
   country_shp = readOGR(paste0("~/data/ntl/regions_shapefiles/", 
                                shapefile_of_country[country]))
@@ -143,14 +213,14 @@ for (i in 3:10) {
   du[,i] = as.numeric(du[,i])
 }
 
-write.csv(du, paste0("~/data/ntl/ntl_results/table_of_areas_regions.csv"), row.names = F)
+write.csv(du, paste0("~/data/ntl//ntl_results/aurora_correction/table_of_areas_regions.csv"), row.names = F)
 
 
 
 
 
 
-base_year = rast("~/data/ntl/ntl_results/Z_DMSPstacked_45latitude.tif")[[2]]
+base_year = rast("~/data/ntl//ntl_results/aurora_correction/corrected_ntl_stack.tif")[[2]]
 print("EU excl. Greenland")
 regn_shp = reg_shp_eu
 cl = clip_to_shape(ntl, regn_shp, vectr = T)
@@ -175,7 +245,7 @@ all_numbers = c(round(total_area),
 
 all_numbers_eu = all_numbers
 
-base_year = rast("~/data/ntl/ntl_results/Z_DMSPstacked_45latitude.tif")[[1]]
+base_year = rast("~/data/ntl//ntl_results/aurora_correction/corrected_ntl_stack.tif")[[1]]
 print("North America")
 regn_shp = reg_shp_na
 cl = clip_to_shape(ntl, regn_shp)
@@ -260,6 +330,6 @@ colnames(dat) = c("total area", "lit area",
                   "percent increase", "percent decrease")
 dat$region = c("pan-Arctic","Russia", "North America", "EU excl. Greenland")
 
-write.csv(dat, "~/data/ntl/ntl_results/table_of_areas.csv")
+write.csv(dat, "~/data/ntl//ntl_results/aurora_correction/table_of_areas.csv")
 
 

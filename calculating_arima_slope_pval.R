@@ -5,7 +5,7 @@ library(raster) # for reading rasters and using parallel clusterR function
 library(tictoc) # for measuring time
 
 # Loading stack of 22 years of DMSP data cut to 45° latitude 
-stack_ntl <- stack("~/data/ntl/ntl_results/Z_DMSPstacked_45latitude.tif")
+stack_ntl <- stack("~/data/ntl/ntl_results/aurora_correction/corrected_ntl_stack.tif")
 
 print("Start calculations")
 
@@ -22,7 +22,7 @@ fun_slope <- function(vect, time = c(1:22)) { if (sum(is.na(vect)) >= 13){ NA }
    return(mod$coef[3])}}
 
 
-
+# takes approx. 2 hours on 32 cores, 32 GB RAM (16GB RAM may be enough)
 tic("linear regression arima on 32 nodes")
 beginCluster(n = 32)
 arima_slopes = clusterR(stack_ntl, calc, 
@@ -31,7 +31,7 @@ arima_slopes = clusterR(stack_ntl, calc,
 endCluster()
 toc()
 
-writeRaster(arima_slopes,  "~/data/ntl/ntl_results/arima_slopes.tif", overwrite=T)
+writeRaster(arima_slopes,  "~/data/ntl/ntl_results/aurora_correction/arima_slopes.tif", overwrite=T)
 
 ## Calculating arima pvalue
 fun_pval <- function(x, time = c(1:22)) { 
@@ -55,12 +55,12 @@ arima_pvals = clusterR(stack_ntl, calc,
 endCluster()
 toc()
 
-writeRaster(arima_pvals,  "~/data/ntl/ntl_results/arima_pvals.tif", overwrite=T)
+writeRaster(arima_pvals,  "~/data/ntl/ntl_results/aurora_correction/arima_pvals.tif", overwrite=T)
 
 
 # saving significant slopes
-slps = raster("~/data/ntl/ntl_results/arima_slopes.tif")
-pvals = raster("~/data/ntl/ntl_results/arima_pvals.tif")
+slps = raster("~/data/ntl/ntl_results/aurora_correction/arima_slopes.tif")
+pvals = raster("~/data/ntl/ntl_results/aurora_correction/arima_pvals.tif")
 slps[pvals>0.05]=100 # non-significant slopes are set to 100
 #plot(slps)
-writeRaster(slps, "~/data/ntl/ntl_results/arima_slopes_significant.tif", overwrite=T)
+writeRaster(slps, "~/data/ntl/ntl_results/aurora_correction/arima_slopes_significant.tif", overwrite=T)

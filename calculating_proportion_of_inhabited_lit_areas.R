@@ -6,7 +6,7 @@ library(reshape)
 
 ## Reading the stack of ALAN data ---------------------------------------------
 
-ntl_all = rast("~/data/ntl/ntl_results/Z_DMSPstacked_45latitude.tif")
+ntl_all = rast("~/data/ntl/ntl_results/aurora_correction/corrected_ntl_stack.tif")
 
 ## Reading all the shapefiles for regions and subregions ----------------------
 
@@ -232,8 +232,15 @@ dat = data.frame(rbind(arctic_hum_lit, rus_hum_lit,
 colnames(dat) = c("1995", "2000", 
                   "2005", "2010")
 dat$region = c("pan-Arctic","Russia", "North America", "EU excl. Greenland")
+df = dat
+df = df[,c(5,1:4)]
+df$mean = apply(df[,2:5], 1, function(x) round(mean(x), 2))
+df$range = apply(df[,2:5], 1, function(x) paste(
+  round(min(x), 2), "-", round(max(x), 2)))
+df$mean_with_range = paste0(df$mean, " (", df$range, ")")
 
-
+write.csv(df, "~/data/ntl/ntl_results/aurora_correction/table_of_lit_by_humans.csv", 
+          row.names = F)
 
 
 ## Calculating for the subregions (Supplementary Table 1) --------------------
@@ -280,7 +287,7 @@ df$range = apply(df[,2:5], 1, function(x) paste(
   round(min(x), 2), "-", round(max(x), 2)))
 df$mean_with_range = paste0(df$mean, " (", df$range, ")")
 
-write.csv(df, "~/data/ntl/ntl_results/table_of_lit_by_humans_regions.csv", 
+write.csv(df, "~/data/ntl/ntl_results/aurora_correction/table_of_lit_by_humans_regions.csv", 
           row.names = F)
 
 

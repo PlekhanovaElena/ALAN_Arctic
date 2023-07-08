@@ -3,9 +3,9 @@ library(rgdal)
 library(tictoc)
 library(reshape)
 
-## Reading the stack of ALAN data ---------------------------------------------
+## Reading the stack of corrected ALAN data -----------------------------------
 
-ntl = rast("~/data/ntl/ntl_results/Z_DMSPstacked_45latitude.tif")
+ntl = rast("~/data/ntl/ntl_results/aurora_correction/corrected_ntl_stack.tif")
 
 ## Reading all the shapefiles for regions and subregions ----------------------
 
@@ -110,24 +110,25 @@ reg_shp_un_pa = rbind(vect(reg_shp_rus), reg_shp_eu, vect(reg_shp_na), vect(reg_
 ## Calculating lit area for the larger region (Table 1) -----------------------
 
 print("EU excl. Greenland")
+n_years = 21 # we exclude 1992
 vectr = T
 regn_shp = reg_shp_eu
-cr = crop(ntl, ext(regn_shp))
+cr = crop(ntl[[-1]], ext(regn_shp))
 if (vectr) cl = mask(cr, regn_shp) else cl = mask(cr, vect(regn_shp))
 cl[cl == 0] = NA
-arl = cellSize(cl, unit = "km")
-lit_areas_years = sapply(1:22, function(i) sum(values(arl[[i]]), na.rm = T))
+arl = cellSize(cl, unit = "km", lyrs = T, mask = T)
+lit_areas_years = sapply(1:n_years, function(i) sum(values(arl[[i]]), na.rm = T))
 lit_areas_years[lit_areas_years == 0] = NA
-mod = arima(lit_areas_years, xreg=1:22, order = c(1, 0, 0))
+mod = arima(lit_areas_years, xreg=1:n_years, order = c(1, 0, 0))
 slp = round(mod$coef[3])
 cat("ARIMA slope:", slp, "km2\n")
-arpred = predict(mod, newxreg=1:22)
+arpred = predict(mod, newxreg=1:n_years)
 pvalues = (1-pnorm(abs(mod$coef)/sqrt(diag(mod$var.coef))))*2
 pvalue = pvalues[3]
 cat("ARIMA p-value:", pvalue)
 all_numbers_eu = c(lit_areas_years, slp, pvalue)
-
-
+all_numbers_eu = c(NA, all_numbers_eu) # adding NA for 1992
+ 
 print("North America")
 vectr = F
 regn_shp = reg_shp_na
@@ -137,7 +138,7 @@ lit_areas_years = sapply(1:22, function(i) {
   cr = crop(ntl[[i]], ext(regn_shp))
   if (vectr) cl = mask(cr, regn_shp) else cl = mask(cr, vect(regn_shp))
   cl[cl == 0] = NA
-  arl = cellSize(cl, unit = "km")
+  arl = cellSize(cl, unit = "km", lyrs = T, mask = T)
   toc()
   return(sum(values(arl), na.rm = T))
 })
@@ -163,7 +164,7 @@ lit_areas_years = sapply(1:22, function(i) {
   cr = crop(ntl[[i]], ext(regn_shp))
   if (vectr) cl = mask(cr, regn_shp) else cl = mask(cr, vect(regn_shp))
   cl[cl == 0] = NA
-  arl = cellSize(cl, unit = "km")
+  arl = cellSize(cl, unit = "km", lyrs = T, mask = T)
   toc()
   return(sum(values(arl), na.rm = T))
 })
@@ -188,7 +189,7 @@ lit_areas_years = sapply(1:22, function(i) {
   cr = crop(ntl[[i]], ext(regn_shp))
   if (vectr) cl = mask(cr, regn_shp) else cl = mask(cr, vect(regn_shp))
   cl[cl == 0] = NA
-  arl = cellSize(cl, unit = "km")
+  arl = cellSize(cl, unit = "km", lyrs = T, mask = T)
   toc()
   return(sum(values(arl), na.rm = T))
 })
@@ -215,10 +216,8 @@ df$region = c("pan-Arctic","Russia", "North America", "EU excl. Greenland")
 
 # calculating annual growth extent
 df$annual_growth_ext = round(100*df$arima_slope/df$Lit_km_1992,2) # base year 1992
-df$annual_growth_ext[4] = round(100*df$arima_slope[4]/df$Lit_km_1993,2) # base year 1993
-write.csv(df, "~/data/ntl/ntl_results/table_1_of_areas_per_year.csv", row.names = F)
-
-
+df$annual_growth_ext[4] = round(100*(df$arima_slope[4])/(df$Lit_km_1993[4]),2) # base year 1993
+write.csv(df, "~/data/ntl/ntl_results/aurora_correction/table_1_of_areas_per_year.csv", row.names = F)
 
 
 
@@ -241,7 +240,7 @@ cnt_uls = sapply(names(regions_of_country)[1:5], function(country) {
     if (vectr) cl = mask(cr, regn_shp) else cl = mask(cr, vect(regn_shp))
     cl[cl == 0] = NA
     
-    arl = cellSize(cl, unit = "km")
+    arl = cellSize(cl, unit = "km", lyrs = T, mask = T)
     lit_areas_years = sapply(1:22, function(i) sum(values(arl[[i]]), na.rm = T))
     lit_areas_years[lit_areas_years == 0] = NA
     
@@ -276,7 +275,7 @@ cnt_uls2 = sapply(names(regions_of_country)[7:9], function(country) {
     if (vectr) cl = mask(cr, regn_shp) else cl = mask(cr, vect(regn_shp))
     cl[cl == 0] = NA
     
-    arl = cellSize(cl, unit = "km")
+    arl = cellSize(cl, unit = "km", lyrs = T, mask = T)
     lit_areas_years = sapply(1:22, function(i) sum(values(arl[[i]]), na.rm = T))
     lit_areas_years[lit_areas_years == 0] = NA
     
@@ -309,7 +308,7 @@ lit_areas_years = sapply(1:22, function(i) {
   cr = crop(ntl[[i]], ext(regn_shp))
   if (vectr) cl = mask(cr, regn_shp) else cl = mask(cr, vect(regn_shp))
   cl[cl == 0] = NA
-  arl = cellSize(cl, unit = "km")
+  arl = cellSize(cl, unit = "km", lyrs = T, mask = T)
   toc()
   return(sum(values(arl), na.rm = T))
 })
@@ -347,6 +346,6 @@ df$annual_growth_ext[inds_regs_1993] =
   round(100*df$arima_slope[inds_regs_1993]/df$Lit_km_1993[inds_regs_1993],2)
 
 write.csv(df, 
-          paste0("~/data/ntl/ntl_results/areas_of_subregions_per_year.csv"), 
+          paste0("~/data/ntl/ntl_results/aurora_correction/areas_of_subregions_per_year.csv"), 
           row.names = F)
 
