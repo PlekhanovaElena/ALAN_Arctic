@@ -13,7 +13,7 @@ https://gadm.org/download_country.html
 
 ## Code
 
-Required packages: terra, raster, rgdal tictoc, reshape, ggplot2
+Required packages: terra, raster, rgdal, tictoc, reshape, ggplot2
 
 ### Data preparation
 
@@ -52,7 +52,7 @@ We then created Table 1 and Supplementary table 2 with [creating_tables.R](https
 
 ### Creating ALAN trend maps (Figure 2,3)
 
-We calculated and saved ARIMA slope and p-value for each pixel of CCNL data across 1992-2013. The code is parallelized to 32 cores for computational efficiency and takes about 2h to run on 32 cores, 32GB RAM. 
+We calculated and saved ARIMA slope and p-value for each pixel of CCNL data across 1992-2013. The code is parallelized to 32 cores for computational efficiency and takes about 5h to run on 32 cores, 32GB RAM. 
 
 [calculating_arima_slope_pval.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_arima_slope_pval.R)
 
