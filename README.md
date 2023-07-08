@@ -33,9 +33,7 @@ We calculated total lit area for each region and subregion for each year. We the
 
 [calculating_lit_area_per_year_and_growth.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_lit_area_per_year_and_growth.R)
 
-We plotted Figure 1
-
-[plotting_Fig1.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/plotting_Fig1.R)
+We plotted Figure 1 with [plotting_Fig1.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/plotting_Fig1.R)
 
 We calculated total area, newly lit area and ALAN intensity-based annual growth rate in human activity for regions and subregions. Additionally, we calculate the percent of significantly increasing/decreasing area to total area based on the ALAN intensity trend map (see the next section).
 
@@ -45,9 +43,7 @@ We calculated proportion of lit areas containing human settlement to the total l
 
 [calculating_proportion_of_inhabited_lit_areas.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_proportion_of_inhabited_lit_areas.R)
 
-We then created Table 1 and Supplementary table 2
-
-[creating_tables.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/creating_tables.R)
+We then created Table 1 and Supplementary table 2 with [creating_tables.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/creating_tables.R)
 
 
 
