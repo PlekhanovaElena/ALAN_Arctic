@@ -15,6 +15,8 @@ https://ghsl.jrc.ec.europa.eu/download.php?ds=pop
 Database of Global Administrative Areas (GADM 4.1) is available at 
 https://gadm.org/download_country.html
 
+---
+
 ## Code
 
 Required packages: terra, raster, rgdal, tictoc, reshape, ggplot2
@@ -60,4 +62,6 @@ We calculated and saved ARIMA slope and p-value for each pixel of CCNL data acro
 
 [calculating_arima_slope_pval.R](https://github.com/PlekhanovaElena/ALAN_Arctic/blob/main/calculating_arima_slope_pval.R)
 
+---
 
+In case you encounter any problems, feel free to open GitHub issue.
