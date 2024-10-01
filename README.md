@@ -1,5 +1,8 @@
 # Artificial light at night in the Arctic
 
+This repository contains the code for the article **Artificial light at night reveals hotspots and rapid development of
+industrial activity in the Arctic** (2024) by Cengiz Akandil, Elena Plekhanova, Nils Rietze, Jacqueline Oehri, Miguel O. Roman, Zhuosen Wang, Volker C Radeloff, and Gabriela Schaepman-Strub.
+
 ## Data
 
 The consistent and corrected nighttime light (CCNL) dataset is based on DMSP and available as GeoTIFF format at 
