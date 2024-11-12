@@ -1,8 +1,12 @@
 # Artificial light at night in the Arctic
 
-This repository contains the code for the article 
+This repository contains the code for the [article](https://doi.org/10.1073/pnas.2322269121) 
 
-**Artificial light at night reveals hotspots and rapid development of industrial activity in the Arctic** (2024) by Cengiz Akandil, Elena Plekhanova, Nils Rietze, Jacqueline Oehri, Miguel O. Roman, Zhuosen Wang, Volker C Radeloff, and Gabriela Schaepman-Strub.
+**Artificial light at night reveals hotspots and rapid development of industrial activity in the Arctic**, _PNAS_ (2024) by Cengiz Akandil, Elena Plekhanova, Nils Rietze, Jacqueline Oehri, Miguel O. Roman, Zhuosen Wang, Volker C Radeloff, and Gabriela Schaepman-Strub.
+
+Check out an interactive map of Arctic ALAN trends [here](https://uzh.maps.arcgis.com/apps/instant/basic/index.html?appid=4af8de4e880443f18c5d1a550684bf97)
+![image](https://github.com/user-attachments/assets/a4fd883c-9662-4a01-a415-6f13049bb92b)
+
 
 ## Data
 
@@ -65,3 +69,9 @@ We calculated and saved ARIMA slope and p-value for each pixel of CCNL data acro
 ---
 
 In case you encounter any problems, feel free to open GitHub issue.
+
+### Citation
+
+C. Akandil, E. Plekhanova, N. Rietze, J. Oehri, M.O. Román, Z. Wang, V.C. Radeloff, G. Schaepman-Strub, Artificial light at night reveals hotspots and rapid development of industrial activity in the Arctic, Proc. Natl. Acad. Sci. U.S.A.
+121 (44) e2322269121, 
+https://doi.org/10.1073/pnas.2322269121 (2024).
