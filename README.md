@@ -5,6 +5,7 @@ This repository contains the code for the [article](https://doi.org/10.1073/pnas
 **Artificial light at night reveals hotspots and rapid development of industrial activity in the Arctic**, _PNAS_ (2024) by Cengiz Akandil, Elena Plekhanova, Nils Rietze, Jacqueline Oehri, Miguel O. Roman, Zhuosen Wang, Volker C Radeloff, and Gabriela Schaepman-Strub.
 
 The data for the article can be found here:
+
 Akandil, C. et all (2024). Arctic ALAN Intensity Change Maps (1992-2013) [Data set]. Zenodo. [https://zenodo.org/records/14755082](https://zenodo.org/records/14755082)
 
 Check out an interactive map of Arctic ALAN trends [here](https://uzh.maps.arcgis.com/apps/instant/basic/index.html?appid=4af8de4e880443f18c5d1a550684bf97)
